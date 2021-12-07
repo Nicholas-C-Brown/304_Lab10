@@ -145,7 +145,7 @@ INSERT INTO category(categoryName) VALUES ('Arts and Crafts');
 INSERT INTO category(categoryName) VALUES ('Miscellaneous');
 
 INSERT product(productName, categoryId, productDesc, productPrice) VALUES ('Yukata', 1, 'A bathrobe', 45.00);
-INSERT product(productName, categoryId, productDesc, productPrice) VALUES ('Kokeshi Doll',2,'A really cool doll. Not for children.', 700.00);
+INSERT product(productName, categoryId, productDesc, productPrice) VALUES ('Kokeshi Doll',2,'A really cool doll. Not for children.', 70.00);
 INSERT product(productName, categoryId, productDesc, productPrice) VALUES ('Okigari Koboshi Doll',2,'An ever cooler doll. This one is for children.',10.00);
 INSERT product(productName, categoryId, productDesc, productPrice) VALUES ('Ukiyo-e Woodblock Prints',3,'Wooden blocks with patterned edges',22.00);
 INSERT product(productName, categoryId, productDesc, productPrice) VALUES ('Chopsticks',4,'Eating utensils',21.35);

@@ -10,19 +10,9 @@
 </head>
 <body>
 
-<div style="display: flex; flex-direction: row; align-items: center; background-color: pink; justify-content: space-between; padding: 2px 10px">
-	<div style="display: flex; flex-direction: row; align-items: center;">
-		<h1 style="padding-right: 10px">Group 5 Grocery</h1>
-		<h3 style="padding-right: 10px"><a href="index.jsp">Home</a></h3>
-		<h3 style="padding-right: 10px"><a href="showcart.jsp">View Cart</a></h3>
-		<h3 style="padding-right: 10px"><a href="listorder.jsp">View Orders</a></h3>
-	</div>
-	<div>
-		<h3>Logged in as Bob</h3>
-	</div>
-</div>
+<jsp:include page="header.jsp"/>
 
-
+<div style="padding-left: 60px">
 <h1>Search for the products you want to buy:</h1>
 
 <form method="get" action="listprod.jsp">
@@ -76,12 +66,12 @@ catch (java.lang.ClassNotFoundException e)
 		}
 
 		out.println(
-			"<table>" +
+			"<table id=\"myTable\">" +
 				"<tr>" +
 					"<th></th>" +
-					"<th>Product Name</th>" +
-					"<th>Category</th>" +
-					"<th>Price</th>" +
+					"<th onclick=\"sortTable(1)\">Product Name</th>" +
+					"<th onclick=\"sortTable(2)\">Category</th>" +
+					"<th onclick=\"sortTable(3)\">Price</th>" +
 				"</tr>"
 		);
 
@@ -113,6 +103,65 @@ catch (java.lang.ClassNotFoundException e)
 		out.println(e);
 	}
 %>
+</div>
+
+<!--Table ordering function from https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_sort_table_desc -->
+<script>
+	function sortTable(n) {
+		var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+		table = document.getElementById("myTable");
+		switching = true;
+		//Set the sorting direction to ascending:
+		dir = "asc";
+		/*Make a loop that will continue until
+        no switching has been done:*/
+		while (switching) {
+			//start by saying: no switching is done:
+			switching = false;
+			rows = table.rows;
+			/*Loop through all table rows (except the
+            first, which contains table headers):*/
+			for (i = 1; i < (rows.length - 1); i++) {
+				//start by saying there should be no switching:
+				shouldSwitch = false;
+				/*Get the two elements you want to compare,
+                one from current row and one from the next:*/
+				x = rows[i].getElementsByTagName("TD")[n];
+				y = rows[i + 1].getElementsByTagName("TD")[n];
+				/*check if the two rows should switch place,
+                based on the direction, asc or desc:*/
+				if (dir == "asc") {
+					if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+						//if so, mark as a switch and break the loop:
+						shouldSwitch= true;
+						break;
+					}
+				} else if (dir == "desc") {
+					if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+						//if so, mark as a switch and break the loop:
+						shouldSwitch = true;
+						break;
+					}
+				}
+			}
+			if (shouldSwitch) {
+				/*If a switch has been marked, make the switch
+                and mark that a switch has been done:*/
+				rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+				switching = true;
+				//Each time a switch is done, increase this count by 1:
+				switchcount ++;
+			} else {
+				/*If no switching has been done AND the direction is "asc",
+                set the direction to "desc" and run the while loop again.*/
+				if (switchcount == 0 && dir == "asc") {
+					dir = "desc";
+					switching = true;
+				}
+			}
+		}
+	}
+</script>
 
 </body>
 </html>

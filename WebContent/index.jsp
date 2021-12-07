@@ -4,6 +4,9 @@
         <title>Group 5's Grocery Main Page</title>
 </head>
 <body>
+
+<jsp:include page="header.jsp"/>
+
 <h1 align="center">Welcome to Group 5's Grocery</h1>
 <pre align="center">
 Nicholas Brown - 81058851
