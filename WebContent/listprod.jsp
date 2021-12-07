@@ -1,6 +1,7 @@
 <%@ page import="java.sql.*,java.net.URLEncoder" %>
 <%@ page import="java.text.NumberFormat" %>
 <%@ page import="java.util.Locale" %>
+<%@ page import="java.net.URL" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF8"%>
 <!DOCTYPE html>
 <html>
@@ -90,13 +91,8 @@ catch (java.lang.ClassNotFoundException e)
 			String productName = rs.getString(2);
 			double price = rs.getDouble(3);
 			String categoryName= rs.getString(4);
-			String addCartLink = new StringBuilder("addcart.jsp?id=")
-					.append(productId)
-					.append("&name=")
-					.append(productName)
-					.append("&price=")
-					.append(price)
-					.toString();
+			String addCartLink ="addcart.jsp?id=" + productId + "&price=" + price + "&name=" + productName;
+
 			String productLink = new StringBuilder("product.jsp?id=")
 					.append(productId)
 					.toString();

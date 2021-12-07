@@ -52,5 +52,6 @@ catch (Exception e)
     out.print(e);
 }  
 %>
+<jsp:forward page="shop.html" />
 </body>
 </html> 
