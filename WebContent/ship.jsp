@@ -111,7 +111,7 @@
 
 %>                       				
 
-<h2><a href="shop.html">Back to Main Page</a></h2>
+<h2><a href="index.jsp">Back to Main Page</a></h2>
 
 </body>
 </html>

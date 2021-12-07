@@ -161,7 +161,11 @@ HashMap<String, ArrayList<Object>> productList = (HashMap<String, ArrayList<Obje
         out.println("<h1>Order completed. Will be shipped soon...");
         out.println("<h1>Your order reference number is: " + orderId + "</h1>");
         out.println("<h1>Shipping to customer: " + customerId + " Name: " + customerName + "</h1>");
-        out.println("<h1><a href=\"shop.html\">Return to Shopping</a></h1>");
+        out.println("<h1><a href=\"index.jsp\">Return to Shopping</a></h1>");
+
+        //Clear product list from session
+        productList = new HashMap<>();
+        session.setAttribute("productList", productList);
 
         String sqlClearCart = "DELETE FROM incart WHERE orderId = ?";
         try( PreparedStatement pstmt5 = con.prepareStatement(sqlClearCart) ) {
@@ -175,41 +179,6 @@ HashMap<String, ArrayList<Object>> productList = (HashMap<String, ArrayList<Obje
         out.println("<p>" + e + "</p>");
     }
 
-// Save order information to database
-
-
-	/*
-	// Use retrieval of auto-generated keys.
-	PreparedStatement pstmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);			
-	ResultSet keys = pstmt.getGeneratedKeys();
-	keys.next();
-	int orderId = keys.getInt(1);
-	*/
-
-// Insert each item into OrderProduct table using OrderId from previous INSERT
-
-// Update total amount for order record
-
-// Here is the code to traverse through a HashMap
-// Each entry in the HashMap is an ArrayList with item 0-id, 1-name, 2-quantity, 3-price
-
-/*
-	Iterator<Map.Entry<String, ArrayList<Object>>> iterator = productList.entrySet().iterator();
-	while (iterator.hasNext())
-	{ 
-		Map.Entry<String, ArrayList<Object>> entry = iterator.next();
-		ArrayList<Object> product = (ArrayList<Object>) entry.getValue();
-		String productId = (String) product.get(0);
-        String price = (String) product.get(2);
-		double pr = Double.parseDouble(price);
-		int qty = ( (Integer)product.get(3)).intValue();
-            ...
-	}
-*/
-
-// Print out order summary
-
-// Clear cart if order placed successfully
 %>
 </BODY>
 </HTML>

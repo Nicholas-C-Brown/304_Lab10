@@ -45,10 +45,10 @@ try(Connection c = DriverManager.getConnection(url, uid, pw)){
 
     String addCartLink = new StringBuilder("addcart.jsp?id=")
             .append(productId)
-            .append("&name=")
-            .append(productName)
             .append("&price=")
             .append(price)
+            .append("&name=")
+            .append(productName)
             .toString();
 
     out.println("<h1><a href=" + addCartLink + ">Add to cart</a></h1>");

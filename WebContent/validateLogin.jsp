@@ -30,12 +30,27 @@
 		if((username.length() == 0) || (password.length() == 0))
 				return null;
 
-		try 
+		String sql = new StringBuilder()
+				.append("SELECT userid FROM customer ")
+				.append("WHERE userid = ? AND")
+				.append(" password = ?")
+				.toString();
+
+		try
+		(
+			Connection con = DriverManager.getConnection(url, uid, pw);
+			PreparedStatement pstmt = con.prepareStatement(sql);
+		)
 		{
-			getConnection();
-			
-			// TODO: Check if userId and password match some customer account. If so, set retStr to be the username.
-			retStr = "";			
+			pstmt.setString(1, username);
+			pstmt.setString(2, password);
+
+			ResultSet rs = pstmt.executeQuery();
+			retStr = "";
+			while(rs.next()){
+				retStr = rs.getString(1);
+			}
+
 		} 
 		catch (SQLException ex) {
 			out.println(ex);
@@ -50,8 +65,8 @@
 			session.setAttribute("authenticatedUser",username);
 		}
 		else
-			session.setAttribute("loginMessage","Could not connect to the system using that username/password.");
-
+			session.setAttribute("loginMessage","No login with username: " + username + ", and password: " + password);
+		//session.setAttribute("loginMessage","Could not connect to the system using that username/password.");
 		return retStr;
 	}
 %>

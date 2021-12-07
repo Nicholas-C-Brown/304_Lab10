@@ -13,7 +13,7 @@
 <div style="display: flex; flex-direction: row; align-items: center; background-color: pink; justify-content: space-between; padding: 2px 10px">
 	<div style="display: flex; flex-direction: row; align-items: center;">
 		<h1 style="padding-right: 10px">Group 5 Grocery</h1>
-		<h3 style="padding-right: 10px"><a href="shop.html">Home</a></h3>
+		<h3 style="padding-right: 10px"><a href="index.jsp">Home</a></h3>
 		<h3 style="padding-right: 10px"><a href="showcart.jsp">View Cart</a></h3>
 		<h3 style="padding-right: 10px"><a href="listorder.jsp">View Orders</a></h3>
 	</div>
