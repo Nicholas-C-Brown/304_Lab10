@@ -49,13 +49,12 @@ try
     scanner.close();
     
     out.print("<br><br><h1>Database loaded.</h1>");
-    session.setAttribue("dataLoaded", true);
+    out.print("<h3><a href=\"index.jsp\">Return to homepage.</a></h3>");
 }
 catch (Exception e)
 {
     out.print(e);
 }  
 %>
-<jsp:forward page="index.jsp" />
 </body>
 </html> 

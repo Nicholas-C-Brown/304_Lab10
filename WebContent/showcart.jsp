@@ -1,8 +1,5 @@
-<%@ page import="java.util.HashMap" %>
-<%@ page import="java.util.Iterator" %>
-<%@ page import="java.util.ArrayList" %>
 <%@ page import="java.text.NumberFormat" %>
-<%@ page import="java.util.Map" %>
+<%@ page import="java.util.*" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF8"%>
 <!DOCTYPE html>
 <html>
@@ -11,6 +8,9 @@
 </head>
 <body>
 
+<%@ include file="header.jsp"%>
+
+<div style="padding-left: 60px">
 <%
 // Get the current list of products
 @SuppressWarnings({"unchecked"})
@@ -22,7 +22,8 @@ if (productList == null)
 }
 else
 {
-	NumberFormat currFormat = NumberFormat.getCurrencyInstance();
+	Locale locale = Locale.US;
+	NumberFormat currFormat = NumberFormat.getCurrencyInstance(locale);
 
 	out.println("<h1>Your Shopping Cart</h1>");
 	out.print("<table><tr><th>Product Id</th><th>Product Name</th><th>Quantity</th>");
@@ -79,6 +80,7 @@ else
 }
 %>
 <h2><a href="listprod.jsp">Continue Shopping</a></h2>
+</div>
 </body>
 </html> 
 

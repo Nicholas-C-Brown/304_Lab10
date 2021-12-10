@@ -31,10 +31,12 @@
 				return null;
 
 		String sql = new StringBuilder()
-				.append("SELECT userid FROM customer ")
+				.append("SELECT userid, customerId FROM customer ")
 				.append("WHERE userid = ? AND")
 				.append(" password = ?")
 				.toString();
+
+		int customerId = -1;
 
 		try
 		(
@@ -49,6 +51,7 @@
 			retStr = "";
 			while(rs.next()){
 				retStr = rs.getString(1);
+				customerId = rs.getInt(2);
 			}
 
 		} 
@@ -63,10 +66,10 @@
 		if(retStr != null)
 		{	session.removeAttribute("loginMessage");
 			session.setAttribute("authenticatedUser",username);
+			session.setAttribute("authenticatedCustomerId",customerId);
 		}
 		else
-			session.setAttribute("loginMessage","No login with username: " + username + ", and password: " + password);
-		//session.setAttribute("loginMessage","Could not connect to the system using that username/password.");
+			session.setAttribute("loginMessage","An account with that username and password doesn't exist.");
 		return retStr;
 	}
 %>

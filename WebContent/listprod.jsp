@@ -11,6 +11,7 @@
 <body>
 
 <jsp:include page="header.jsp"/>
+<%@ include file="jdbc.jsp" %>
 
 <div style="padding-left: 60px">
 <h1>Search for the products you want to buy:</h1>
@@ -37,9 +38,6 @@ catch (java.lang.ClassNotFoundException e)
 // Use it to build a query and print out the resultset.  Make sure to use PreparedStatement!
 
 // Make the connection
-	String url = "jdbc:sqlserver://db:1433;DatabaseName=tempdb;";
-	String uid = "SA";
-	String pw = "YourStrong@Passw0rd";
 
 	Locale locale = Locale.US;
 	NumberFormat currFormat = NumberFormat.getCurrencyInstance(locale);
