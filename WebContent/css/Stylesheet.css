@@ -1,0 +1,36 @@
+h1 {
+  font-family: "Readex Pro", sans-serif;
+  font-size: 35px;
+}
+pre {
+  font-family: "Readex Pro", sans-serif;
+  font-size: 10px;
+}
+.myButton {
+  background-color: #d6d6d6;
+  border-radius: 28px;
+  border: 1px solid #d6d6d6;
+  display: inline-block;
+  cursor: pointer;
+  color: #696969;
+  font-family: Arial;
+  font-size: 17px;
+  padding: 8px 31px;
+  text-decoration: none;
+  text-shadow: 0px 1px 0px #d6d6d6;
+}
+.myButton:hover {
+  background-color: #d6d6d6;
+}
+.myButton:active {
+  position: relative;
+  top: 1px;
+}
+.header_container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background-color: white;
+  justify-content: space-between;
+  padding: 2px 10px;
+}
