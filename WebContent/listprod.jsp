@@ -4,17 +4,18 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF8"%>
 <!DOCTYPE html>
 <html>
+	<link rel="stylesheet" type="text/css" href="css/Stylesheet.css"/>
 <head>
 <title>Group 5 Grocery</title>
 </head>
 <body>
 
-<div style="display: flex; flex-direction: row; align-items: center; background-color: pink; justify-content: space-between; padding: 2px 10px">
+<div class="header_container">
 	<div style="display: flex; flex-direction: row; align-items: center;">
 		<h1 style="padding-right: 10px">Group 5 Grocery</h1>
-		<h3 style="padding-right: 10px"><a href="shop.html">Home</a></h3>
-		<h3 style="padding-right: 10px"><a href="showcart.jsp">View Cart</a></h3>
-		<h3 style="padding-right: 10px"><a href="listorder.jsp">View Orders</a></h3>
+		<h3 style="padding-right: 10px"><a href="shop.html" class="myButton">Home</a></h3>
+		<h3 style="padding-right: 10px"><a href="showcart.jsp" class="myButton">View Cart</a></h3>
+		<h3 style="padding-right: 10px"><a href="listorder.jsp" class="myButton">View Orders</a></h3>
 	</div>
 	<div>
 		<h3>Logged in as Bob</h3>
