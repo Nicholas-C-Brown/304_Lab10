@@ -30,12 +30,30 @@
 		if((username.length() == 0) || (password.length() == 0))
 				return null;
 
-		try 
+		String sql = new StringBuilder()
+				.append("SELECT userid, customerId FROM customer ")
+				.append("WHERE userid = ? AND")
+				.append(" password = ?")
+				.toString();
+
+		int customerId = -1;
+
+		try
+		(
+			Connection con = DriverManager.getConnection(url, uid, pw);
+			PreparedStatement pstmt = con.prepareStatement(sql);
+		)
 		{
-			getConnection();
-			
-			// TODO: Check if userId and password match some customer account. If so, set retStr to be the username.
-			retStr = "";			
+			pstmt.setString(1, username);
+			pstmt.setString(2, password);
+
+			ResultSet rs = pstmt.executeQuery();
+			retStr = "";
+			while(rs.next()){
+				retStr = rs.getString(1);
+				customerId = rs.getInt(2);
+			}
+
 		} 
 		catch (SQLException ex) {
 			out.println(ex);
@@ -48,10 +66,10 @@
 		if(retStr != null)
 		{	session.removeAttribute("loginMessage");
 			session.setAttribute("authenticatedUser",username);
+			session.setAttribute("authenticatedCustomerId",customerId);
 		}
 		else
-			session.setAttribute("loginMessage","Could not connect to the system using that username/password.");
-
+			session.setAttribute("loginMessage","An account with that username and password doesn't exist.");
 		return retStr;
 	}
 %>

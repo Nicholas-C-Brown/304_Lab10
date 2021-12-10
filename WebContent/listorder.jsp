@@ -9,9 +9,22 @@
 </head>
 <body>
 
+<jsp:include page="header.jsp"/>
+<%@ include file="auth.jsp"%>
+<%@ include file="jdbc.jsp" %>
+
+<div style="padding-left: 60px">
 <h1>Order List</h1>
 
 <%
+
+session = request.getSession(true);
+Integer customerId = (Integer) session.getAttribute("authenticatedCustomerId");
+if(customerId == null){
+	out.println("<p>Please login to view your orders</p>");
+	return;
+}
+
 //Note: Forces loading of SQL Server driver
 try
 {	// Load driver class
@@ -22,23 +35,22 @@ catch (java.lang.ClassNotFoundException e)
 	System.err.println("ClassNotFoundException: " +e);
 }
 
-String url = "jdbc:sqlserver://db:1433;DatabaseName=tempdb;";
-String uid = "SA";
-String pw = "YourStrong@Passw0rd";
-
+String sql = "SELECT os.orderId, os.orderDate, c.customerId, c.firstName + ' ' + c.lastName as customerName, os.totalAmount" +
+		" FROM ordersummary os" +
+		" INNER JOIN customer c ON os.customerId = c.customerId " +
+		" WHERE c.customerId = ?";
 
 // Make connection
 try (
 	Connection con = DriverManager.getConnection(url, uid, pw);
-	Statement stmt = con.createStatement();
+	PreparedStatement pstmt = con.prepareStatement(sql);
 )
 {
+
+	pstmt.setInt(1, customerId);
+
 	Locale locale = Locale.US;
 	NumberFormat currFormat = NumberFormat.getCurrencyInstance(locale);
-
-	String sql = "SELECT os.orderId, os.orderDate, c.customerId, c.firstName + ' ' + c.lastName as customerName, os.totalAmount" +
-			" FROM ordersummary os" +
-			" INNER JOIN customer c ON os.customerId = c.customerId ";
 
 	String sql2 = " SELECT p.productId, productPrice, op.quantity" +
 			" FROM product p" +
@@ -46,9 +58,9 @@ try (
 			" INNER JOIN ordersummary os ON os.orderId = op.orderId" +
 			" WHERE os.orderId = ? ";
 
-	try (PreparedStatement pstmt = con.prepareStatement(sql2)) {
+	try (PreparedStatement pstmt2 = con.prepareStatement(sql2)) {
 
-		ResultSet rst = stmt.executeQuery(sql);
+		ResultSet rst = pstmt.executeQuery();
 		out.println(
 			"<table style='border: 1px solid black'>" +
 				"<tr>" +
@@ -80,8 +92,8 @@ try (
 							"</tr>"
 			);
 
-			pstmt.setInt(1, orderId);
-			ResultSet rst2 = pstmt.executeQuery();
+			pstmt2.setInt(1, orderId);
+			ResultSet rst2 = pstmt2.executeQuery();
 			while (rst2.next()) {
 				out.println(
 					"<tr>" +
@@ -103,7 +115,7 @@ try (
 }
 
 %>
-
+</div>
 </body>
 </html>
 

@@ -145,7 +145,7 @@ INSERT INTO category(categoryName) VALUES ('Arts and Crafts');
 INSERT INTO category(categoryName) VALUES ('Miscellaneous');
 
 INSERT product(productName, categoryId, productDesc, productPrice) VALUES ('Yukata', 1, 'A bathrobe', 45.00);
-INSERT product(productName, categoryId, productDesc, productPrice) VALUES ('Kokeshi Doll',2,'A really cool doll. Not for children.', 700.00);
+INSERT product(productName, categoryId, productDesc, productPrice) VALUES ('Kokeshi Doll',2,'A really cool doll. Not for children.', 70.00);
 INSERT product(productName, categoryId, productDesc, productPrice) VALUES ('Okigari Koboshi Doll',2,'An ever cooler doll. This one is for children.',10.00);
 INSERT product(productName, categoryId, productDesc, productPrice) VALUES ('Ukiyo-e Woodblock Prints',3,'Wooden blocks with patterned edges',22.00);
 INSERT product(productName, categoryId, productDesc, productPrice) VALUES ('Chopsticks',4,'Eating utensils',21.35);
@@ -174,43 +174,6 @@ INSERT INTO customer (firstName, lastName, email, phonenum, address, city, state
 INSERT INTO customer (firstName, lastName, email, phonenum, address, city, state, postalCode, country, userid, password) VALUES ('Darren', 'Doe', 'oe@doe.com', '250-807-2222', '444 Dover Lane', 'Kelowna', 'BC', 'V1V 2X9', 'Canada', 'darren' , 'pw');
 INSERT INTO customer (firstName, lastName, email, phonenum, address, city, state, postalCode, country, userid, password) VALUES ('Elizabeth', 'Elliott', 'engel@uiowa.edu', '555-666-7777', '555 Everwood Street', 'Iowa City', 'IA', '52241', 'United States', 'beth' , 'test');
 
--- Order 1 can be shipped as have enough inventory
-DECLARE @orderId int
-INSERT INTO ordersummary (customerId, orderDate, totalAmount) VALUES (1, '2019-10-15 10:25:55', 91.70)
-SELECT @orderId = @@IDENTITY
-INSERT INTO orderproduct (orderId, productId, quantity, price) VALUES (@orderId, 1, 1, 18)
-INSERT INTO orderproduct (orderId, productId, quantity, price) VALUES (@orderId, 5, 2, 21.35)
-INSERT INTO orderproduct (orderId, productId, quantity, price) VALUES (@orderId, 10, 1, 31);
-
-DECLARE @orderId int
-INSERT INTO ordersummary (customerId, orderDate, totalAmount) VALUES (2, '2019-10-16 18:00:00', 106.75)
-SELECT @orderId = @@IDENTITY
-INSERT INTO orderproduct (orderId, productId, quantity, price) VALUES (@orderId, 5, 5, 21.35);
-
--- Order 3 cannot be shipped as do not have enough inventory for item 7
-DECLARE @orderId int
-INSERT INTO ordersummary (customerId, orderDate, totalAmount) VALUES (3, '2019-10-15 3:30:22', 140)
-SELECT @orderId = @@IDENTITY
-INSERT INTO orderproduct (orderId, productId, quantity, price) VALUES (@orderId, 6, 2, 25)
-INSERT INTO orderproduct (orderId, productId, quantity, price) VALUES (@orderId, 7, 3, 30);
-
-DECLARE @orderId int
-INSERT INTO ordersummary (customerId, orderDate, totalAmount) VALUES (2, '2019-10-17 05:45:11', 327.85)
-SELECT @orderId = @@IDENTITY
-INSERT INTO orderproduct (orderId, productId, quantity, price) VALUES (@orderId, 3, 4, 10)
-INSERT INTO orderproduct (orderId, productId, quantity, price) VALUES (@orderId, 8, 3, 40)
-INSERT INTO orderproduct (orderId, productId, quantity, price) VALUES (@orderId, 6, 3, 23.25)
-INSERT INTO orderproduct (orderId, productId, quantity, price) VALUES (@orderId, 4, 2, 21.05)
-INSERT INTO orderproduct (orderId, productId, quantity, price) VALUES (@orderId, 1, 4, 14);
-
-DECLARE @orderId int
-INSERT INTO ordersummary (customerId, orderDate, totalAmount) VALUES (5, '2019-10-15 10:25:55', 277.40)
-SELECT @orderId = @@IDENTITY
-INSERT INTO orderproduct (orderId, productId, quantity, price) VALUES (@orderId, 5, 4, 21.35)
-INSERT INTO orderproduct (orderId, productId, quantity, price) VALUES (@orderId, 6, 2, 81)
-INSERT INTO orderproduct (orderId, productId, quantity, price) VALUES (@orderId, 2, 3, 10);
-
--- New SQL DDL for lab 8
 UPDATE Product SET productImageURL = 'img/1.jpg' WHERE ProductId = 1;
 UPDATE Product SET productImageURL = 'img/2.jpg' WHERE ProductId = 2;
 UPDATE Product SET productImageURL = 'img/3.jpg' WHERE ProductId = 3;
@@ -221,3 +184,6 @@ UPDATE Product SET productImageURL = 'img/7.jpg' WHERE ProductId = 7;
 UPDATE Product SET productImageURL = 'img/8.jpg' WHERE ProductId = 8;
 UPDATE Product SET productImageURL = 'img/9.jpg' WHERE ProductId = 9;
 UPDATE Product SET productImageURL = 'img/10.jpg' WHERE ProductId = 10;
+
+INSERT INTO paymentmethod (paymentType, paymentNumber, paymentExpiryDate, customerId) VALUES ('Credit Card', '345', '2024-03-01', 1);
+INSERT INTO paymentmethod (paymentType, paymentNumber, paymentExpiryDate, customerId) VALUES ('Paypal', '43578', '2022-04-11', 2);

@@ -9,6 +9,8 @@
 </head>
 <body>
 
+<%@include file="header.jsp"%>
+<div style="padding-left: 60px">
 <%
     /**
      *  The product list HashMap wasn't returning some of the prices correctly for us.
@@ -17,13 +19,10 @@
 
 
 // Get customer id
-String custId = request.getParameter("customerId");
+String username = request.getParameter("username");
 @SuppressWarnings({"unchecked"})
 HashMap<String, ArrayList<Object>> productList = (HashMap<String, ArrayList<Object>>) session.getAttribute("productList");
 
-// Determine if valid customer id was entered
-// Determine if there are products in the shopping cart
-// If either are not true, display an error message
 
     Locale locale = Locale.US;
     NumberFormat currFormat = NumberFormat.getCurrencyInstance(locale);
@@ -32,7 +31,7 @@ HashMap<String, ArrayList<Object>> productList = (HashMap<String, ArrayList<Obje
     String uid = "SA";
     String pw = "YourStrong@Passw0rd";
 
-    String sql = "SELECT customerId, firstName + ' ' + lastName AS customerName FROM customer WHERE customerId = ?";
+    String sql = "SELECT customerId, firstName + ' ' + lastName AS customerName FROM customer WHERE userid = ?";
 
 // Make connection
     try (
@@ -40,21 +39,19 @@ HashMap<String, ArrayList<Object>> productList = (HashMap<String, ArrayList<Obje
             PreparedStatement pstmt = con.prepareStatement(sql);
     ){
 
-        if(custId == null){
-            out.println("<p>Error: No customer id provided</p>");
+
+        if(username == null){
+            out.println("<h1>Error: No username provided</h1>");
             return;
-        }else {
-            try {
-                pstmt.setInt(1, Integer.parseInt(custId));
-            } catch (NumberFormatException nfe) {
-                out.println("<p>Error: Invalid customer id provided.</p>");
-                return;
-            }
+        }
+
+        else {
+            pstmt.setString(1, username);
         }
 
         ResultSet rs = pstmt.executeQuery();
         if (!rs.isBeforeFirst() ) {
-            out.println("<p>Error: Customer does not exist.</p>");
+            out.println("<h1>Error: Customer does not exist or an invalid password was given.</h1>");
             return;
         }
 
@@ -161,7 +158,11 @@ HashMap<String, ArrayList<Object>> productList = (HashMap<String, ArrayList<Obje
         out.println("<h1>Order completed. Will be shipped soon...");
         out.println("<h1>Your order reference number is: " + orderId + "</h1>");
         out.println("<h1>Shipping to customer: " + customerId + " Name: " + customerName + "</h1>");
-        out.println("<h1><a href=\"shop.html\">Return to Shopping</a></h1>");
+        out.println("<h1><a href=\"index.jsp\">Return to Shopping</a></h1>");
+
+        //Clear product list from session
+        productList = new HashMap<>();
+        session.setAttribute("productList", productList);
 
         String sqlClearCart = "DELETE FROM incart WHERE orderId = ?";
         try( PreparedStatement pstmt5 = con.prepareStatement(sqlClearCart) ) {
@@ -175,42 +176,8 @@ HashMap<String, ArrayList<Object>> productList = (HashMap<String, ArrayList<Obje
         out.println("<p>" + e + "</p>");
     }
 
-// Save order information to database
-
-
-	/*
-	// Use retrieval of auto-generated keys.
-	PreparedStatement pstmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);			
-	ResultSet keys = pstmt.getGeneratedKeys();
-	keys.next();
-	int orderId = keys.getInt(1);
-	*/
-
-// Insert each item into OrderProduct table using OrderId from previous INSERT
-
-// Update total amount for order record
-
-// Here is the code to traverse through a HashMap
-// Each entry in the HashMap is an ArrayList with item 0-id, 1-name, 2-quantity, 3-price
-
-/*
-	Iterator<Map.Entry<String, ArrayList<Object>>> iterator = productList.entrySet().iterator();
-	while (iterator.hasNext())
-	{ 
-		Map.Entry<String, ArrayList<Object>> entry = iterator.next();
-		ArrayList<Object> product = (ArrayList<Object>) entry.getValue();
-		String productId = (String) product.get(0);
-        String price = (String) product.get(2);
-		double pr = Double.parseDouble(price);
-		int qty = ( (Integer)product.get(3)).intValue();
-            ...
-	}
-*/
-
-// Print out order summary
-
-// Clear cart if order placed successfully
 %>
+</div>
 </BODY>
 </HTML>
 

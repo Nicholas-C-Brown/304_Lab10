@@ -1,25 +1,18 @@
-<%@ page import="java.util.HashMap" %>
-<%@ page import="java.text.NumberFormat" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF8"%>
-<%@ include file="jdbc.jsp" %>
 
 <html>
 <head>
 <title>Group 5's Grocery - Product Information</title>
-<link href="css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 
 <%@ include file="header.jsp" %>
 
+<div style="padding-left: 60px">
 <%
 // Get product name to search for
 // TODO: Retrieve and display info for the product
 String productId = request.getParameter("id");
-
-String url = "jdbc:sqlserver://db:1433;DatabaseName=tempdb;";
-String uid = "SA";
-String pw = "YourStrong@Passw0rd";
 
 String sql = "SELECT productName, productDesc, productPrice, productImageURL FROM product WHERE productId = ?";
 
@@ -45,10 +38,10 @@ try(Connection c = DriverManager.getConnection(url, uid, pw)){
 
     String addCartLink = new StringBuilder("addcart.jsp?id=")
             .append(productId)
-            .append("&name=")
-            .append(productName)
             .append("&price=")
             .append(price)
+            .append("&name=")
+            .append(productName)
             .toString();
 
     out.println("<h1><a href=" + addCartLink + ">Add to cart</a></h1>");
@@ -59,10 +52,8 @@ try(Connection c = DriverManager.getConnection(url, uid, pw)){
     out.println(e);
 }
 
-// TODO: Retrieve any image stored directly in database. Note: Call displayImage.jsp with product id as parameter.
-		
-// TODO: Add links to Add to Cart and Continue Shopping
 %>
+</div>
 
 </body>
 </html>

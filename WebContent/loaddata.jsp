@@ -10,6 +10,9 @@
 <body>
 
 <%
+
+session = request.getSession(true);
+
 String url = "jdbc:sqlserver://db:1433;DatabaseName=tempdb;";
 String uid = "SA";
 String pw = "YourStrong@Passw0rd";
@@ -46,6 +49,7 @@ try
     scanner.close();
     
     out.print("<br><br><h1>Database loaded.</h1>");
+    out.print("<h3><a href=\"index.jsp\">Return to homepage.</a></h3>");
 }
 catch (Exception e)
 {
