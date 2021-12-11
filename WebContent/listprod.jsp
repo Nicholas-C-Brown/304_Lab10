@@ -5,7 +5,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF8"%>
 <!DOCTYPE html>
 <html>
-	<link rel="stylesheet" type="text/css" href="css/Stylesheet.css"/>
 <head>
 <title>Group 5 Grocery</title>
 </head>
